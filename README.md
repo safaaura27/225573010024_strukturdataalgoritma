@@ -1,0 +1,1 @@
+# 225573010024_strukturdataalgoritma
