@@ -23,3 +23,28 @@ const tahunMasuk = 2023;
 
 console.log('Jurusan     :', jurusan);
 console.log('Tahun Masuk :', tahunMasuk);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+let nama = 'safa';
+let umur =19;
+let kota = 'lhokseumawe';
+
+console.log ("Nama Siswa= ", nama);
+console.log ("Umur Siswa= ", umur);
+console.log ("Tempat tinggal=", kota);
+const jurusan = "Tektik Informatika";
