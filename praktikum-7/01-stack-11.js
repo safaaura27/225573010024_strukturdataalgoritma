@@ -1,7 +1,15 @@
-class Node { constructor(d){this.data=d;this.next=null;} }
+class Node { 
+  constructor(d){
+    this.data=d;
+    this.next=null;
+  } 
+}
 
 class Stack {
-    constructor() { this.top = null; this.size = 0; }
+    constructor() {
+      this.top = null; 
+      this.size = 0;
+    }
 
     push(data) {
       const node = new Node(data);

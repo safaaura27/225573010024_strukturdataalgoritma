@@ -81,7 +81,7 @@ const daftarPasien = [
     new Pasien(2, "Siti", "darurat", "08:05"),
     new Pasien(3, "Andi", "biasa", "08:10"),
     new Pasien(4, "Rina", "darurat", "08:15"),
-    new Pasien(5, "Doni", "biasa", "08:20"),
+    new Pasien(5, "Maya", "biasa", "08:20"),
     new Pasien(6, "Lina", "biasa", "08:25"),
     new Pasien(7, "Ayu", "darurat", "08:30"),
     new Pasien(8, "Rizky", "biasa", "08:35"),
