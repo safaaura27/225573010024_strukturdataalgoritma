@@ -1,8 +1,3 @@
-// ======================================
-// TUGAS 2 : SOAL KLASIK LINKED LIST
-// ======================================
-
-// Node
 class Node {
     constructor(data) {
         this.data = data;
@@ -10,306 +5,187 @@ class Node {
     }
 }
 
-// Linked List
 class LinkedList {
     constructor() {
         this.head = null;
     }
 
-    // tambah data
     append(data) {
         const newNode = new Node(data);
 
-        if (this.head === null) {
+        if (!this.head) {
             this.head = newNode;
-        } else {
-            let current = this.head;
-
-            while (current.next !== null) {
-                current = current.next;
-            }
-
-            current.next = newNode;
-        }
-    }
-
-    // print list
-    print() {
-        if (this.head === null) {
-            console.log("null");
             return;
         }
 
         let current = this.head;
+        while (current.next) {
+            current = current.next;
+        }
+
+        current.next = newNode;
+    }
+
+    print() {
+        let current = this.head;
         let result = "";
 
-        while (current !== null) {
+        while (current) {
             result += current.data + " -> ";
             current = current.next;
         }
 
         result += "null";
-
         console.log(result);
-    }
-
-    // ======================================
-    // 1. PALINDROME
-    // ======================================
-
-    palindrome() {
-        let arr = [];
-        let current = this.head;
-
-        while (current !== null) {
-            arr.push(current.data);
-            current = current.next;
-        }
-
-        let normal = arr.join("");
-        let reverse = [...arr].reverse().join("");
-
-        return normal === reverse;
-    }
-
-    // ======================================
-    // 2. HAPUS N DARI AKHIR
-    // ======================================
-
-    hapusNDariAkhir(n) {
-
-        let dummy = new Node(0);
-        dummy.next = this.head;
-
-        let fast = dummy;
-        let slow = dummy;
-
-        for (let i = 0; i <= n; i++) {
-
-            if (fast === null) {
-                return;
-            }
-
-            fast = fast.next;
-        }
-
-        while (fast !== null) {
-            fast = fast.next;
-            slow = slow.next;
-        }
-
-        slow.next = slow.next.next;
-
-        this.head = dummy.next;
-    }
-
-    // ======================================
-    // 3. NODE TENGAH
-    // ======================================
-
-    tengahLinkedList() {
-
-        let slow = this.head;
-        let fast = this.head;
-
-        while (fast !== null && fast.next !== null) {
-            slow = slow.next;
-            fast = fast.next.next;
-        }
-
-        return slow.data;
     }
 }
 
+function palindromeLinked(list) {
+    let arr = [];
+    let current = list.head;
 
+    while (current) {
+        arr.push(current.data);
+        current = current.next;
+    }
 
-// ======================================
-// TESTING PALINDROME
-// ======================================
+    let reversed = [...arr].reverse();
 
-console.log("=== palindrome ===");
+    return JSON.stringify(arr) === JSON.stringify(reversed);
+}
 
-// list 1
-const list1 = new LinkedList();
+function hapusDariAkhir(head, n) {
+    let arr = [];
 
-list1.append(1);
-list1.append(2);
-list1.append(3);
-list1.append(2);
-list1.append(1);
+    let current = head;
+    while (current) {
+        arr.push(current.data);
+        current = current.next;
+    }
 
-console.log("list 1:");
+    arr.splice(arr.length - n, 1);
+
+    let listBaru = new LinkedList();
+    arr.forEach(x => listBaru.append(x));
+
+    return listBaru;
+}
+
+function tengahLinkedList(head) {
+    let slow = head;
+    let fast = head;
+
+    while (fast && fast.next) {
+        slow = slow.next;
+        fast = fast.next.next;
+    }
+
+    return slow.data;
+}
+
+console.log("=== palindromeLinked ===");
+
+let list1 = new LinkedList();
+[1,2,3,2,1].forEach(x => list1.append(x));
+
+console.log("List 1:");
 list1.print();
+console.log("palindrome?", palindromeLinked(list1));
 
-console.log("palindrome?", list1.palindrome());
+let list2 = new LinkedList();
+[1,2,2,1].forEach(x => list2.append(x));
 
-
-// list 2
-const list2 = new LinkedList();
-
-list2.append(1);
-list2.append(2);
-list2.append(2);
-list2.append(1);
-
-console.log("\nlist 2:");
+console.log("List 2:");
 list2.print();
+console.log("palindrome?", palindromeLinked(list2));
 
-console.log("palindrome?", list2.palindrome());
+let list3 = new LinkedList();
+[1,2,3,4,5].forEach(x => list3.append(x));
 
-
-// list 3
-const list3 = new LinkedList();
-
-list3.append(1);
-list3.append(2);
-list3.append(3);
-list3.append(4);
-list3.append(5);
-
-console.log("\nlist 3:");
+console.log("List 3:");
 list3.print();
+console.log("palindrome?", palindromeLinked(list3));
 
-console.log("palindrome?", list3.palindrome());
-
-
-// list 4
-const list4 = new LinkedList();
-
+let list4 = new LinkedList();
 list4.append(1);
 
-console.log("\nlist 4:");
+console.log("List 4:");
 list4.print();
-
-console.log("palindrome?", list4.palindrome());
-
+console.log("palindrome?", palindromeLinked(list4));
 
 
-// ======================================
-// TESTING HAPUS N DARI AKHIR
-// ======================================
+console.log("\n=== hapusDariAkhir ===");
 
-console.log("\n=== hapusNDariAkhir ===");
-
-// case 1
-const h1 = new LinkedList();
-
-h1.append(1);
-h1.append(2);
-h1.append(3);
-h1.append(4);
-h1.append(5);
+let h1 = new LinkedList();
+[1,2,3,4,5].forEach(x => h1.append(x));
 
 console.log("sebelum 1:");
 h1.print();
 
-h1.hapusNDariAkhir(5);
+let hasil1 = hapusDariAkhir(h1.head, 1);
 
 console.log("sesudah 1:");
-h1.print();
+hasil1.print();
 
+let h2 = new LinkedList();
+[1,2,3,4,5].forEach(x => h2.append(x));
 
-// case 2
-const h2 = new LinkedList();
-
-h2.append(1);
-h2.append(2);
-h2.append(3);
-h2.append(4);
-h2.append(5);
-
-console.log("\nsebelum 2:");
+console.log("sebelum 2:");
 h2.print();
 
-h2.hapusNDariAkhir(2);
+let hasil2 = hapusDariAkhir(h2.head, 2);
 
 console.log("sesudah 2:");
-h2.print();
+hasil2.print();
 
+let h3 = new LinkedList();
+[1,2,3].forEach(x => h3.append(x));
 
-// case 3
-const h3 = new LinkedList();
-
-h3.append(1);
-h3.append(2);
-h3.append(3);
-
-console.log("\nsebelum 3:");
+console.log("sebelum 3:");
 h3.print();
 
-h3.hapusNDariAkhir(1);
+let hasil3 = hapusDariAkhir(h3.head, 1);
 
 console.log("sesudah 3:");
-h3.print();
+hasil3.print();
 
-
-// case 4
-const h4 = new LinkedList();
-
+let h4 = new LinkedList();
 h4.append(50);
 
-console.log("\nsebelum 4:");
+console.log("sebelum 4:");
 h4.print();
 
-h4.hapusNDariAkhir(1);
+let hasil4 = hapusDariAkhir(h4.head, 1);
 
 console.log("sesudah 4:");
-h4.print();
-
-
-
-// ======================================
-// TESTING TENGAH LINKED LIST
-// ======================================
+hasil4.print();
 
 console.log("\n=== tengahLinkedList ===");
 
-// list tengah 1
-const t1 = new LinkedList();
+let t1 = new LinkedList();
+[1,2,3,4,5].forEach(x => t1.append(x));
 
-t1.append(1);
-t1.append(2);
-t1.append(3);
-t1.append(4);
-t1.append(5);
-
-console.log("list 1:");
+console.log("List 1:");
 t1.print();
+console.log("tengah:", tengahLinkedList(t1.head));
 
-console.log("tengah:", t1.tengahLinkedList());
+let t2 = new LinkedList();
+[1,2,3,4].forEach(x => t2.append(x));
 
-
-// list tengah 2
-const t2 = new LinkedList();
-
-t2.append(1);
-t2.append(2);
-t2.append(3);
-t2.append(4);
-
-console.log("\nlist 2:");
+console.log("List 2:");
 t2.print();
+console.log("tengah:", tengahLinkedList(t2.head));
 
-console.log("tengah:", t2.tengahLinkedList());
-
-
-// list tengah 3
-const t3 = new LinkedList();
-
+let t3 = new LinkedList();
 t3.append(1);
 
-console.log("\nlist 3:");
+console.log("List 3:");
 t3.print();
+console.log("tengah:", tengahLinkedList(t3.head));
 
-console.log("tengah:", t3.tengahLinkedList());
-
-
-// list tengah 4
-const t4 = new LinkedList();
-
+let t4 = new LinkedList();
 t4.append(33);
 
-console.log("\nlist 4:");
+console.log("List 4:");
 t4.print();
-
-console.log("tengah:", t4.tengahLinkedList());
+console.log("tengah:", tengahLinkedList(t4.head));

@@ -1,9 +1,10 @@
 class Node {
     constructor(d){
-        this.data= d;
+        this.data = d;
         this.next = null;
     }
 }
+
 
 function adaSiklus(head) {
     let lambat = head;
@@ -32,9 +33,10 @@ function mergeTerurut(head1, head2) {
     current.next = head1 || head2;
     return dummy.next;
 }
+
 function buatList(arr) {
     if (!arr.length) return null;
-    const head = new Node(arr[0]);
+    const head = new Node (arr[0]);
     let cur = head;
     for (let i=1;i<arr.length;i++){
         cur.next=new Node(arr[i]);
@@ -45,19 +47,19 @@ function buatList(arr) {
 function cetakList(head) {
     let s='', cur=head;
     while(cur){
-        s += cur.next?`[${cur.data}]→`:`[${cur.data}]`;cur=cur.next;}
+    s += cur.next?`[${cur.data}] →`: `[${cur.data}]`;cur=cur.next;}
     console.log(' ',s);
 }
 
 const A = buatList([1,2,3,4,5]);
-console.log('Ada siklus (seharusnya false):', adaSiklus(A));
+console.log('Ada siklus (seharusnya false):',adaSiklus(A));
 
-A.next.next.next.next.next = A.next;  
-console.log('Ada siklus (seharusnya true) :', adaSiklus(A));
+A.next.next.next.next.next = A.next;
+console.log('Ada siklus (seharusnya true):', adaSiklus(A));
 
 const L1 = buatList([1,3,5,7,9]);
 const L2 = buatList([2,4,6,8,10]);
-console.log('\nList 1:'); cetakList(L1);
+console.log('\nList 1:') ; cetakList(L1);
 console.log('List 2:'); cetakList(L2);
 const merged = mergeTerurut(L1, L2);
 console.log('Merged:'); cetakList(merged);

@@ -1,136 +1,112 @@
-class NodeStack {
+class Node {
     constructor(data) {
         this.data = data;
         this.next = null;
     }
 }
-
-class LinkedListStack {
+class LinkedList { 
     constructor() {
         this.head = null;
         this.size = 0;
     }
-
-    prepend(data) {
-        const newNode = new NodeStack(data);
-
+    append(data) {
+        const newNode = new Node(data);
         newNode.next = this.head;
         this.head = newNode;
-
         this.size++;
     }
-
-    removeFirst() {
-        if (this.head === null) {
-            return null;
-        }
-
-        const removed = this.head.data;
+    remove() {
+        if (!this.head) return null;
+        const removedData = this.head.data;
         this.head = this.head.next;
         this.size--;
-        return removed;
+        return removedData;
     }
-
-    getFirst() {
-        if (this.head === null) {
-            return null;
-        }
-
-        return this.head.data;
+    peekHead() {
+        return this.head ? this.head.data : null;
     }
-
-    isEmpty() {
-        return this.size === 0;
-    }
-
     print() {
-        if (this.head === null) {
-            console.log("Stack kosong");
-            return;
-        }
-
+        const values = [];
         let current = this.head;
-        let result = "";
-
-        while (current !== null) {
-            result += current.data + " -> ";
+        while (current) {
+            values.push(current.data);
             current = current.next;
         }
-
-        result += "null";
-
-        console.log(result);
+        console.log('[top]' + values.join (' -> ') + ' -> null');
     }
 }
-
-// STACK
-class Stack {
+class stack {
     constructor() {
-        this.list = new LinkedListStack();
+        this.list = new LinkedList();
     }
-
     push(data) {
-        this.list.prepend(data);
+        this.list.append(data);
     }
-
     pop() {
-        return this.list.removeFirst();
+        if (this.isEmpty()) {
+            console.log('Stack kosong, tidak bisa pop.');
+            return null;
+        }
+        return this.list.remove();
     }
-
-    peek() {
-        return this.list.getFirst();
+    peek(){
+        return this.list.peekHead();
     }
-
     isEmpty() {
-        return this.list.isEmpty();
+        return this.list.size === 0;
     }
-
-    size() {
+    getSize() {
         return this.list.size;
     }
-
     print() {
         this.list.print();
     }
 }
+console.log('=== Stack Dasar ===' );
+const stack1 = new stack();
+console.log('isEmpty:', stack1.isEmpty());
+stack1.push(10);
+stack1.push(20);
+stack1.push(30);
+console.log('peek:', stack1.peek());
+console.log('size:', stack1.getSize());
+stack1.print();
+console.log('pop:', stack1.pop());
+stack1.print();
+console.log('size:', stack1.getSize());
+stack1.pop();
+console.log('isEmpty:', stack1.isEmpty());
+stack1.pop();
 
-// TESTING STACK
-const stack = new Stack();
+console.log('\n=== Simulasi Undo/Redo');
+const aksi = ['ketik "Hello"', 'ketik "World"', 'hapus "World"', 'ketik "JavaScript"'];
+const undoStack = new stack();
+const redoStack = new stack(); 
 
-console.log("=== PUSH ===");
-stack.push("Aksi 1");
-stack.push("Aksi 2");
-stack.push("Aksi 3");
-stack.print();
-
-console.log("\n=== PEEK ===");
-console.log(stack.peek());
-
-console.log("\n=== POP ===");
-console.log("Data dihapus:", stack.pop());
-stack.print();
-
-console.log("\n=== SIZE ===");
-console.log(stack.size());
-
-console.log("\n=== ISEMPTY ===");
-console.log(stack.isEmpty());
-
-// SIMULASI UNDO / REDO
-console.log("\n=== SIMULASI UNDO ===");
-
-const undoStack = new Stack();
-// simpan aksi
-undoStack.push("Menulis huruf A");
-undoStack.push("Menulis huruf B");
-undoStack.push("Menulis huruf C");
-
-console.log("Data stack:");
+console.log('\nLakukan aksi:');
+aksi.forEach(a => {
+    undoStack.push(a);
+    console.log('Aksi:', a);
+});
+console.log('\nUndo aksi:');
 undoStack.print();
 
-// undo 2 kali
-console.log("\nUndo:", undoStack.pop());
-console.log("Undo:", undoStack.pop());
-
-console.log("\nSisa stack:");
+console.log('\nUndo 3 kali:');
+for (let i = 0; i < 3; i++) {
+    const dibatalkan = undoStack.pop();
+    if (dibatalkan) {
+        redoStack.push(dibatalkan);
+        console.log('Redo:', dibatalkan);
+    }
+}
+console.log('\n redo 1 kali:');
+const redone = redoStack.pop();
+if (redone) {
+    undoStack.push(redone);
+    console.log('Undo:', redone);
+}
+console.log('\nStatus akhir:');
+console.log('Undo Stack:');
 undoStack.print();
+console.log('Redo Stack:');
+redoStack.print();
